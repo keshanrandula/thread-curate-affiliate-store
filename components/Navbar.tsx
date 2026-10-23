@@ -13,7 +13,6 @@ import {
   ChevronDown,
   ArrowRight,
   ShieldAlert,
-  UserCheck,
 } from "lucide-react";
 import { useWishlist } from "./WishlistProvider";
 import { ThemeToggle } from "./ThemeToggle";
@@ -217,14 +216,6 @@ export function Navbar({
               )}
             </button>
 
-            {/* Admin Dashboard shortcut */}
-            <Link
-              href="/admin"
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-stone-700 hover:text-amber-600 bg-stone-100 hover:bg-stone-200 border border-stone-200 hover:border-amber-400/50 dark:text-zinc-300 dark:hover:text-amber-300 dark:bg-zinc-900 dark:hover:bg-zinc-850 dark:border-zinc-800 dark:hover:border-amber-500/40 rounded-xl transition-all"
-            >
-              <UserCheck className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
-              <span>Admin</span>
-            </Link>
 
             {/* Mobile menu toggle */}
             <button
@@ -304,14 +295,6 @@ export function Navbar({
               FTC Affiliate Disclosure
             </Link>
 
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:bg-stone-100 dark:hover:bg-zinc-900 rounded-lg flex items-center justify-between"
-            >
-              <span>Merchant Admin Portal</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       )}

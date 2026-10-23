@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, ShieldCheck, ExternalLink } from "lucide-react";
+import { Sparkles, ShieldCheck } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Footer({
@@ -110,12 +110,7 @@ export function Footer({
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link href="/admin" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-1">
-                  <span>Merchant Admin Portal</span>
-                  <ExternalLink className="w-3 h-3" />
-                </Link>
-              </li>
+
             </ul>
           </div>
 
