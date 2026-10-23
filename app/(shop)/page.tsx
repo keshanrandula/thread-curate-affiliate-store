@@ -34,7 +34,7 @@ export default async function HomePage() {
       {/* --- HERO BANNER (Editable via SiteSettings) --- */}
       <section className="relative pt-12 sm:pt-20 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/30 text-amber-900 dark:text-amber-300 text-xs font-semibold shadow-inner">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/30 text-amber-950 dark:text-amber-300 text-xs font-bold shadow-inner">
             <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             <span>Curated Apparel &amp; Verified Merchant Partnerships</span>
           </div>
@@ -46,7 +46,7 @@ export default async function HomePage() {
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-stone-600 dark:text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-base sm:text-lg text-stone-700 dark:text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
             {settings.heroSubtitle ||
               "Discover premier fashion and wardrobe essentials across the world's best designer brands and verified retailers."}
           </p>
@@ -61,7 +61,7 @@ export default async function HomePage() {
             </Link>
             <a
               href="#categories"
-              className="px-6 py-3.5 rounded-xl bg-white dark:bg-zinc-900/90 hover:bg-stone-100 dark:hover:bg-zinc-800 border border-stone-200 dark:border-zinc-800 hover:border-amber-500/40 text-stone-800 dark:text-zinc-200 font-semibold text-xs sm:text-sm shadow-sm transition-all"
+              className="px-6 py-3.5 rounded-xl bg-[#fffef9] dark:bg-zinc-900/90 hover:bg-amber-100/70 dark:hover:bg-zinc-800 border border-amber-300/80 dark:border-zinc-800 hover:border-amber-500/60 text-amber-950 dark:text-zinc-200 font-bold text-xs sm:text-sm shadow-xs shadow-amber-500/10 transition-all"
             >
               Browse Categories
             </a>

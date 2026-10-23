@@ -16,17 +16,17 @@ export function AffiliateDisclosureBanner({
   return (
     <aside
       aria-label="Affiliate Disclosure"
-      className="bg-amber-500/10 dark:bg-indigo-950/60 border-b border-amber-500/20 dark:border-indigo-500/20 px-4 py-2 text-xs text-amber-950 dark:text-indigo-200/90 relative z-40 backdrop-blur-md transition-colors"
+      className="bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-yellow-500/15 dark:bg-amber-950/40 border-b border-amber-400/40 dark:border-amber-500/20 px-4 py-2 text-xs text-amber-950 dark:text-amber-200/90 relative z-40 backdrop-blur-md transition-colors"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <Info className="w-3.5 h-3.5 text-amber-600 dark:text-indigo-400 shrink-0" />
+          <Info className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
           <span>
             {customText ||
               "Affiliate Disclosure: When you purchase through links on our site, we may earn an affiliate commission at no extra cost to you."}{" "}
             <Link
               href="/disclosure"
-              className="underline text-amber-800 dark:text-indigo-300 hover:text-black dark:hover:text-white font-medium ml-1"
+              className="underline text-amber-900 dark:text-amber-300 hover:text-orange-600 dark:hover:text-white font-semibold ml-1"
             >
               Learn more
             </Link>

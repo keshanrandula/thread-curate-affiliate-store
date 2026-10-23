@@ -65,10 +65,10 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="group relative flex flex-col bg-white dark:bg-zinc-900/40 rounded-2xl border border-stone-200/90 dark:border-zinc-800/60 overflow-hidden card-hover-lift hover:border-amber-400/60 dark:hover:border-zinc-700/80 transition-all duration-300 shadow-sm dark:shadow-none"
+      className="group relative flex flex-col bg-[#fffefc] dark:bg-zinc-900/40 rounded-2xl border border-amber-200/80 dark:border-zinc-800/60 overflow-hidden card-hover-lift hover:border-amber-400 dark:hover:border-zinc-700/80 transition-all duration-300 shadow-sm shadow-amber-500/5 dark:shadow-none"
     >
       {/* Image Container with Hover Swap & Badges */}
-      <div className="relative aspect-[3/4] w-full bg-stone-100 dark:bg-zinc-950 overflow-hidden select-none">
+      <div className="relative aspect-[3/4] w-full bg-amber-50/50 dark:bg-zinc-950 overflow-hidden select-none">
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           {/* Primary Image */}
           <Image
@@ -117,7 +117,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             className={`pointer-events-auto p-2 rounded-full backdrop-blur-md border transition-all duration-200 active:scale-90 shadow-sm ${
               isWishlisted
                 ? "bg-rose-500/20 border-rose-500/40 text-rose-500"
-                : "bg-white/80 dark:bg-zinc-950/70 border-stone-200 dark:border-zinc-700/50 text-stone-700 dark:text-zinc-300 hover:text-stone-900 dark:hover:text-white hover:bg-white dark:hover:bg-zinc-900"
+                : "bg-[#fffdf9]/90 dark:bg-zinc-950/70 border-amber-200 dark:border-zinc-700/50 text-amber-900 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-white hover:bg-white dark:hover:bg-zinc-900"
             }`}
             aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
@@ -131,7 +131,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
         {/* Store network pill at bottom of image */}
         <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
-          <span className="bg-white/90 dark:bg-zinc-950/80 backdrop-blur-md text-stone-700 dark:text-zinc-300 text-[10px] font-medium px-2 py-0.5 rounded-full border border-stone-200 dark:border-zinc-800 shadow-sm">
+          <span className="bg-[#fffdf9]/95 dark:bg-zinc-950/80 backdrop-blur-md text-amber-950 dark:text-zinc-300 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-amber-200/90 dark:border-zinc-800 shadow-xs">
             {product.affiliateNetwork}
           </span>
         </div>

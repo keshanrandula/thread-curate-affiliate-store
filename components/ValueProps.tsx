@@ -33,13 +33,13 @@ export function ValueProps() {
   ];
 
   return (
-    <section className="border-y border-stone-200/80 dark:border-zinc-800/80 bg-stone-100/70 dark:bg-zinc-950/40 transition-colors">
+    <section className="border-y border-amber-300/60 dark:border-zinc-800/80 bg-amber-100/35 dark:bg-zinc-950/40 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="flex items-start gap-3.5">
+              <div key={idx} className="flex items-start gap-3.5 p-2 rounded-2xl bg-[#fffdf9]/60 dark:bg-transparent border border-amber-200/50 dark:border-transparent shadow-xs">
                 <div className={`p-2.5 rounded-xl ${item.bg} ${item.color} shrink-0`}>
                   <Icon className="w-5 h-5" />
                 </div>
@@ -47,7 +47,7 @@ export function ValueProps() {
                   <h3 className="font-bold text-xs uppercase tracking-wider text-stone-900 dark:text-white">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-stone-600 dark:text-zinc-400 mt-1 leading-relaxed">
+                  <p className="text-xs text-stone-700 dark:text-zinc-400 mt-1 leading-relaxed">
                     {item.description}
                   </p>
                 </div>

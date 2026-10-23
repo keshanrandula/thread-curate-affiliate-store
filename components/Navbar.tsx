@@ -62,7 +62,9 @@ export function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-40 glass-nav border-b border-stone-200/80 dark:border-zinc-800/80 transition-colors">
+    <header className="sticky top-0 z-40 glass-nav border-b border-amber-200/80 dark:border-zinc-800/80 transition-colors">
+      {/* Top warm golden-amber gradient accent line */}
+      <div className="h-[2.5px] w-full bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-400 shadow-sm shadow-orange-500/20" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           {/* Brand Logo */}
@@ -84,7 +86,7 @@ export function Navbar({
           <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             <Link
               href="/shop"
-              className="px-3 py-1.5 text-xs font-semibold text-stone-700 dark:text-zinc-300 hover:text-stone-900 dark:hover:text-white rounded-lg hover:bg-stone-100 dark:hover:bg-zinc-800/60 transition-colors uppercase tracking-wider"
+              className="px-3.5 py-1.5 text-xs font-bold text-stone-800 dark:text-zinc-300 hover:text-amber-800 dark:hover:text-amber-400 rounded-lg hover:bg-amber-100/70 dark:hover:bg-zinc-800/60 border border-transparent hover:border-amber-300/50 transition-all uppercase tracking-wider"
             >
               All Deals
             </Link>
@@ -97,28 +99,28 @@ export function Navbar({
             >
               <button
                 type="button"
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors uppercase tracking-wider flex items-center gap-1 ${
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all uppercase tracking-wider flex items-center gap-1.5 ${
                   isMegaMenuOpen
-                    ? "text-stone-900 bg-stone-100 dark:text-white dark:bg-zinc-800"
-                    : "text-stone-700 hover:text-stone-900 hover:bg-stone-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-zinc-800/60"
+                    ? "text-amber-900 bg-amber-100 border border-amber-300/70 dark:text-white dark:bg-zinc-800"
+                    : "text-stone-800 hover:text-amber-800 hover:bg-amber-100/70 border border-transparent hover:border-amber-300/50 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-zinc-800/60"
                 }`}
               >
                 <span>Categories</span>
-                <ChevronDown className="w-3.5 h-3.5 text-stone-400 dark:text-zinc-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-amber-600 dark:text-zinc-400" />
               </button>
 
               {/* Mega Menu Dropdown */}
               {isMegaMenuOpen && (
-                <div className="absolute top-full left-0 w-[580px] bg-white/95 dark:bg-zinc-950/95 border border-stone-200 dark:border-zinc-800 rounded-2xl shadow-xl dark:shadow-2xl p-6 backdrop-blur-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="absolute top-full left-0 w-[580px] bg-[#fffdf9]/98 dark:bg-zinc-950/95 border border-amber-300/80 dark:border-zinc-800 rounded-2xl shadow-2xl shadow-amber-500/15 p-6 backdrop-blur-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                   <div className="grid grid-cols-2 gap-4">
                     {categories.map((cat) => (
                       <Link
                         key={cat._id || cat.slug}
                         href={`/category/${cat.slug}`}
                         onClick={() => setIsMegaMenuOpen(false)}
-                        className="group/item flex items-center gap-3.5 p-2.5 rounded-xl hover:bg-stone-50 dark:hover:bg-zinc-900 border border-transparent hover:border-stone-200 dark:hover:border-zinc-800 transition-all"
+                        className="group/item flex items-center gap-3.5 p-2.5 rounded-xl hover:bg-amber-100/60 dark:hover:bg-zinc-900 border border-transparent hover:border-amber-300/60 transition-all"
                       >
-                        <div className="relative w-12 h-14 rounded-lg overflow-hidden bg-stone-100 dark:bg-zinc-900 shrink-0 border border-stone-200 dark:border-zinc-800">
+                        <div className="relative w-12 h-14 rounded-lg overflow-hidden bg-amber-100/70 dark:bg-zinc-900 shrink-0 border border-amber-200/80 dark:border-zinc-800">
                           {cat.image ? (
                             <Image
                               src={cat.image}
@@ -128,7 +130,7 @@ export function Navbar({
                               className="object-cover group-hover/item:scale-105 transition-transform"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-stone-400 dark:text-zinc-600 text-xs">
+                            <div className="w-full h-full flex items-center justify-center text-amber-700 dark:text-zinc-600 text-xs font-bold">
                               {cat.name[0]}
                             </div>
                           )}
@@ -146,8 +148,8 @@ export function Navbar({
                   </div>
 
                   {/* Mega Menu Footer Banner */}
-                  <div className="mt-4 pt-4 border-t border-stone-200/80 dark:border-zinc-800/80 flex items-center justify-between text-xs">
-                    <span className="text-stone-500 dark:text-zinc-400 text-[11px]">
+                  <div className="mt-4 pt-4 border-t border-amber-200/80 dark:border-zinc-800/80 flex items-center justify-between text-xs">
+                    <span className="text-stone-600 dark:text-zinc-400 text-[11px]">
                       Hand-verified apparel from Zara, Nike, Everlane &amp; Amazon
                     </span>
                     <Link
@@ -168,7 +170,7 @@ export function Navbar({
               <Link
                 key={cat._id || cat.slug}
                 href={`/category/${cat.slug}`}
-                className="px-3 py-1.5 text-xs font-semibold text-stone-700 dark:text-zinc-300 hover:text-stone-900 dark:hover:text-white rounded-lg hover:bg-stone-100 dark:hover:bg-zinc-800/60 transition-colors uppercase tracking-wider"
+                className="px-3.5 py-1.5 text-xs font-bold text-stone-800 dark:text-zinc-300 hover:text-amber-800 dark:hover:text-amber-400 rounded-lg hover:bg-amber-100/70 dark:hover:bg-zinc-800/60 border border-transparent hover:border-amber-300/50 transition-all uppercase tracking-wider"
               >
                 {cat.name}
               </Link>
@@ -179,13 +181,13 @@ export function Navbar({
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Search Input Desktop */}
             <form onSubmit={handleSearchSubmit} className="hidden sm:flex relative items-center">
-              <Search className="w-3.5 h-3.5 absolute left-3 text-stone-400 dark:text-zinc-500" />
+              <Search className="w-3.5 h-3.5 absolute left-3 text-amber-600 dark:text-zinc-500" />
               <input
                 type="text"
                 placeholder="Search jackets, boots, dresses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-44 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-stone-100/90 dark:bg-zinc-900/90 text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-zinc-500 rounded-full border border-stone-200 dark:border-zinc-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/40 transition-all"
+                className="w-44 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-amber-50/90 hover:bg-amber-100/50 dark:bg-zinc-900/90 text-stone-900 dark:text-white placeholder-amber-900/40 dark:placeholder-zinc-500 rounded-full border border-amber-300/70 dark:border-zinc-800 focus:outline-none focus:border-amber-500 focus:bg-white focus:ring-2 focus:ring-amber-500/25 transition-all shadow-inner"
               />
             </form>
 
@@ -204,11 +206,11 @@ export function Navbar({
             {/* Wishlist Heart Button with Counter */}
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="relative p-2 text-stone-700 hover:text-amber-600 dark:text-zinc-300 dark:hover:text-amber-400 rounded-xl hover:bg-stone-100 dark:hover:bg-zinc-800/60 border border-stone-200 dark:border-zinc-800/80 transition-colors"
+              className="relative p-2 text-amber-900 hover:text-amber-700 dark:text-zinc-300 dark:hover:text-amber-400 rounded-xl bg-amber-100/70 hover:bg-amber-200/80 dark:bg-zinc-900 dark:hover:bg-zinc-800/60 border border-amber-300/80 dark:border-zinc-800/80 shadow-xs shadow-amber-500/15 transition-all"
               aria-label="View wishlist"
               title="Open Wishlist"
             >
-              <Heart className="w-4 h-4" />
+              <Heart className="w-4 h-4 text-amber-700 dark:text-zinc-300" />
               {wishlistCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black flex items-center justify-center animate-in zoom-in shadow-sm shadow-orange-500/50">
                   {wishlistCount}
@@ -232,13 +234,13 @@ export function Navbar({
         {isSearchOpen && (
           <form onSubmit={handleSearchSubmit} className="sm:hidden pb-3 pt-1">
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-2.5 text-stone-400 dark:text-zinc-500" />
+              <Search className="w-4 h-4 absolute left-3 top-2.5 text-amber-600 dark:text-zinc-500" />
               <input
                 type="text"
                 placeholder="Search curated fashion deals..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-10 py-2 text-xs bg-stone-100 dark:bg-zinc-900 text-stone-900 dark:text-white rounded-xl border border-stone-200 dark:border-zinc-800 focus:outline-none focus:border-amber-500"
+                className="w-full pl-9 pr-10 py-2 text-xs bg-amber-50/90 dark:bg-zinc-900 text-stone-900 dark:text-white rounded-xl border border-amber-300 dark:border-zinc-800 focus:outline-none focus:border-amber-500 shadow-inner"
                 autoFocus
               />
             </div>
@@ -248,12 +250,12 @@ export function Navbar({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/98 dark:bg-zinc-950/98 border-b border-stone-200 dark:border-zinc-800 px-5 pt-3 pb-6 space-y-4 backdrop-blur-2xl shadow-xl transition-colors">
+        <div className="md:hidden bg-[#fffdf9]/98 dark:bg-zinc-950/98 border-b border-amber-200 dark:border-zinc-800 px-5 pt-3 pb-6 space-y-4 backdrop-blur-2xl shadow-xl transition-colors">
           <div className="flex flex-col space-y-1">
             <Link
               href="/shop"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 text-xs font-bold text-stone-900 dark:text-white hover:bg-stone-100 dark:hover:bg-zinc-900 rounded-lg uppercase tracking-wider"
+              className="px-3 py-2 text-xs font-bold text-stone-900 dark:text-white hover:bg-amber-100/60 dark:hover:bg-zinc-900 rounded-lg uppercase tracking-wider"
             >
               All Deals Catalog
             </Link>
@@ -262,7 +264,7 @@ export function Navbar({
                 key={cat._id || cat.slug}
                 href={`/category/${cat.slug}`}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 text-xs font-medium text-stone-700 dark:text-zinc-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-zinc-900 rounded-lg"
+                className="px-3 py-2 text-xs font-semibold text-stone-700 dark:text-zinc-300 hover:text-amber-800 dark:hover:text-white hover:bg-amber-100/60 dark:hover:bg-zinc-900 rounded-lg"
               >
                 {cat.name} Collection
               </Link>

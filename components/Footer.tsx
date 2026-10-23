@@ -12,9 +12,9 @@ export function Footer({
   socialLinks?: Record<string, string>;
 }) {
   return (
-    <footer className="bg-stone-100 dark:bg-zinc-950 border-t border-stone-200 dark:border-zinc-800/80 text-stone-600 dark:text-zinc-400 text-sm mt-24 transition-colors">
+    <footer className="bg-[#f7f2e7] dark:bg-zinc-950 border-t border-amber-300/60 dark:border-zinc-800/80 text-stone-700 dark:text-zinc-400 text-sm mt-24 transition-colors">
       {/* FTC Notice Ribbon */}
-      <div className="border-b border-stone-200 dark:border-zinc-900 bg-stone-200/50 dark:bg-zinc-900/40 py-6 px-4">
+      <div className="border-b border-amber-300/60 dark:border-zinc-900 bg-amber-100/50 dark:bg-zinc-900/40 py-6 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4 text-xs text-stone-600 dark:text-zinc-400">
           <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 shrink-0 font-semibold tracking-wide uppercase">
             <ShieldCheck className="w-4 h-4" />
