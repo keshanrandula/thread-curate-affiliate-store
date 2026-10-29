@@ -75,8 +75,8 @@ export const SEED_PRODUCTS = [
     affiliateUrl: "https://www.amazon.com/dp/B08XYZ1234",
     description: "Crafted on traditional shuttle looms with 13.5oz Japanese selvedge denim. Develops custom patina and honeycombs with wear over time.",
     images: [
-      "https://images.unsplash.com/photo-1542272604-780c96856592?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=800&q=80",
     ],
     tags: ["Denim", "Jeans", "Selvedge", "Casual"],
     attributes: {
