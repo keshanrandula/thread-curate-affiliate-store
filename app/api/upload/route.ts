@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { uploadBufferToCloudinary } from "@/lib/cloudinary";
 
 // Allowed image MIME types
 const ALLOWED_TYPES = new Set([
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
 
     // Check for either 'file' (single) or 'files' (multiple)
     const filesToProcess: File[] = [];
-    
+
     const fileEntries = formData.getAll("files");
     if (fileEntries.length > 0) {
       for (const entry of fileEntries) {
@@ -44,16 +45,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Ensure upload directory exists
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    await fs.mkdir(uploadsDir, { recursive: true });
+    const useCloudinary =
+      Boolean(process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) &&
+      process.env.STORAGE_PROVIDER !== "local";
 
     const uploadedUrls: string[] = [];
+    const publicIds: string[] = [];
 
     for (const file of filesToProcess) {
       if (!ALLOWED_TYPES.has(file.type)) {
         return NextResponse.json(
-          { error: `File type ${file.type} is not supported. Please upload JPEG, PNG, WebP, GIF, or SVG images.` },
+          {
+            error: `File type ${file.type} is not supported. Please upload JPEG, PNG, WebP, GIF, or SVG images.`,
+          },
           { status: 400 }
         );
       }
@@ -65,7 +69,47 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // Generate clean unique filename
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      if (useCloudinary) {
+        try {
+          const originalExt = path.extname(file.name) || "";
+          const sanitizedName = file.name
+            .replace(originalExt, "")
+            .toLowerCase()
+            .replace(/[^a-z0-9_-]/g, "-")
+            .slice(0, 30);
+          const uniqueSuffix = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+          const filename = `${sanitizedName}-${uniqueSuffix}`;
+
+          const result = await uploadBufferToCloudinary(
+            buffer,
+            "affiliate_shop",
+            filename
+          );
+          uploadedUrls.push(result.url);
+          publicIds.push(result.publicId);
+          continue;
+        } catch (cloudinaryErr: any) {
+          console.error("Cloudinary upload failed, attempting local fallback:", cloudinaryErr.message);
+          // If Cloudinary explicitly throws permission error, surface informative message or fall back
+          if (cloudinaryErr?.message?.includes("missing permissions")) {
+            return NextResponse.json(
+              {
+                error:
+                  "Cloudinary API Key is missing 'create/upload' permissions. Please grant 'create' permission to your API key in Cloudinary Console (Settings > API Keys) or generate an API key with full access.",
+              },
+              { status: 403 }
+            );
+          }
+        }
+      }
+
+      // Local fallback storage
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      await fs.mkdir(uploadsDir, { recursive: true });
+
       const originalExt = path.extname(file.name) || ".jpg";
       const sanitizedName = file.name
         .replace(originalExt, "")
@@ -76,9 +120,6 @@ export async function POST(req: NextRequest) {
       const fileName = `${sanitizedName}-${uniqueSuffix}${originalExt}`;
 
       const filePath = path.join(uploadsDir, fileName);
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
       await fs.writeFile(filePath, buffer);
       uploadedUrls.push(`/uploads/${fileName}`);
     }
@@ -87,6 +128,8 @@ export async function POST(req: NextRequest) {
       success: true,
       url: uploadedUrls[0],
       urls: uploadedUrls,
+      publicId: publicIds[0] || undefined,
+      provider: useCloudinary ? "cloudinary" : "local",
     });
   } catch (error: any) {
     console.error("Upload API error:", error);

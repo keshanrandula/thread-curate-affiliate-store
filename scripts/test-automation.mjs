@@ -155,6 +155,26 @@ async function runTests() {
     record("GET /go/nonexistent (Fallback to /shop)", false, err.message);
   }
 
+  // 10. Cloudinary Image Upload API Test
+  try {
+    const samplePngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+    const blob = new Blob([Buffer.from(samplePngBase64, "base64")], { type: "image/png" });
+    const formData = new FormData();
+    formData.append("file", blob, "test-cloud-upload.png");
+
+    const uploadRes = await fetch(`${BASE_URL}/api/upload`, {
+      method: "POST",
+      body: formData,
+    });
+    assert.strictEqual(uploadRes.status, 200, `Expected 200, got ${uploadRes.status}`);
+    const uploadData = await uploadRes.json();
+    assert.strictEqual(uploadData.success, true, "Upload returned success: false");
+    assert.ok(uploadData.url && uploadData.url.includes("cloudinary.com"), `Expected Cloudinary URL, got: ${uploadData.url}`);
+    record("POST /api/upload (Cloudinary CDN)", true, `Uploaded to Cloudinary: ${uploadData.url}`);
+  } catch (err) {
+    record("POST /api/upload (Cloudinary CDN)", false, err.message);
+  }
+
   console.log("\n=========================================");
   console.log("   AUTOMATED BROWSER TESTING (CHROME)    ");
   console.log("=========================================\n");

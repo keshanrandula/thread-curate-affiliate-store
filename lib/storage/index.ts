@@ -67,42 +67,34 @@ export class DirectUrlStorageProvider implements StorageProvider {
 // 3. Cloudinary Storage Provider
 export class CloudinaryStorageProvider implements StorageProvider {
   name = "cloudinary";
-  private cloudName: string;
-  private uploadPreset: string;
-
-  constructor() {
-    this.cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "";
-    this.uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "affiliate_preset";
-  }
 
   async upload(file: File | string): Promise<UploadResult> {
     if (typeof file === "string" && (file.startsWith("http") || file.startsWith("/"))) {
       return { url: file, provider: "cloudinary" };
     }
 
-    if (!this.cloudName) {
-      // Fallback to local upload if Cloudinary credentials are not set
-      return new LocalStorageProvider().upload(file);
+    if (typeof file === "string") {
+      return { url: file, provider: "cloudinary" };
     }
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", this.uploadPreset);
 
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`, {
+    const res = await fetch("/api/upload", {
       method: "POST",
       body: formData,
     });
 
     if (!res.ok) {
-      throw new Error(`Cloudinary upload failed: ${res.statusText}`);
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || `Upload failed with status ${res.status}`);
     }
 
     const data = await res.json();
     return {
-      url: data.secure_url,
+      url: data.url,
       provider: "cloudinary",
-      publicId: data.public_id,
+      publicId: data.publicId,
     };
   }
 }
