@@ -6,26 +6,53 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
-export const metadata: Metadata = {
-  title: "Shop All Deals | Curated Fashion & Clothing Affiliate Store",
-  description:
-    "Explore our full catalog of handpicked clothes, outerwear, denim, footwear, and designer accessories.",
-  alternates: {
-    canonical: "/shop",
-  },
-  openGraph: {
-    title: "Shop All Deals | Curated Fashion & Clothing",
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    category?: string;
+    brand?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    size?: string;
+    color?: string;
+    rating?: string;
+    sort?: string;
+    page?: string;
+    q?: string;
+  }>;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const isFiltered =
+    params.brand || params.minPrice || params.maxPrice || params.size ||
+    params.color || params.rating || params.q ||
+    (params.page && Number(params.page) > 1);
+
+  return {
+    title: "Shop All Deals | Curated Fashion & Clothing Affiliate Store",
     description:
-      "Explore handpicked clothes, outerwear, denim, and designer accessories with verified deals.",
-    url: "/shop",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Shop All Deals | Curated Fashion & Clothing",
-    description: "Explore our full catalog of handpicked clothes and designer accessories.",
-  },
-};
+      "Explore our full catalog of handpicked clothes, outerwear, denim, footwear, and designer accessories.",
+    alternates: {
+      canonical: "/shop",
+    },
+    // Noindex filtered/paginated variants to avoid duplicate content
+    robots: isFiltered
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
+    openGraph: {
+      title: "Shop All Deals | Curated Fashion & Clothing",
+      description:
+        "Explore handpicked clothes, outerwear, denim, and designer accessories with verified deals.",
+      url: "/shop",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Shop All Deals | Curated Fashion & Clothing",
+      description: "Explore our full catalog of handpicked clothes and designer accessories.",
+    },
+  };
+}
 
 export default async function ShopPage({
   searchParams,

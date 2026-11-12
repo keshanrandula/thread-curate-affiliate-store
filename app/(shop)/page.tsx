@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -15,6 +16,41 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductCarousel } from "@/components/ProductCarousels";
 import { ValueProps } from "@/components/ValueProps";
 import { NewsletterSection } from "@/components/NewsletterSection";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export const metadata: Metadata = {
+  title: "THREAD & CURATE | Curated Clothes & Verified Fashion Deals",
+  description:
+    "Discover handpicked designer clothes, footwear, outerwear, and accessories. Curated deals with verified merchant affiliate links — updated daily.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "THREAD & CURATE | Verified Fashion Deals",
+    description:
+      "Handpicked clothing, outerwear, and accessories from vetted top-tier affiliate brands.",
+    url: siteUrl,
+    siteName: "THREAD & CURATE",
+    type: "website",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&h=630&q=80",
+        width: 1200,
+        height: 630,
+        alt: "THREAD & CURATE Fashion Collection",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "THREAD & CURATE | Verified Fashion Deals",
+    description: "Handpicked clothing and accessories from top-tier affiliate brands.",
+    images: [
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&h=630&q=80",
+    ],
+  },
+};
 
 export default async function HomePage() {
   const [categories, featuredProducts, trendingProducts, newArrivals, settings] =

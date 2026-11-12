@@ -76,6 +76,17 @@ async function runTests() {
     record("GET /admin/login (Admin Login)", false, err.message);
   }
 
+  // 5b. Public /login page test
+  try {
+    const res = await fetch(`${BASE_URL}/login`);
+    assert.strictEqual(res.status, 200, `Expected 200, got ${res.status}`);
+    const html = await res.text();
+    assert.ok(html.includes("Sign In") || html.includes("Welcome Back") || html.includes("admin@affiliate.com"), "Public login content missing");
+    record("GET /login (Public Sign In Portal)", true, `Status ${res.status}`);
+  } catch (err) {
+    record("GET /login (Public Sign In Portal)", false, err.message);
+  }
+
   // 6. Robots.txt and Sitemap.xml
   try {
     const resRobots = await fetch(`${BASE_URL}/robots.txt`);

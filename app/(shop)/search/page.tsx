@@ -16,6 +16,12 @@ export async function generateMetadata({
   return {
     title,
     description,
+    // Search result pages should not be indexed to avoid duplicate content
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
     alternates: {
       canonical: q ? `/search?q=${encodeURIComponent(q)}` : "/search",
     },

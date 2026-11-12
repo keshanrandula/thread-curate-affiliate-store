@@ -13,6 +13,7 @@ export default function robots(): MetadataRoute.Robots {
           "/admin",
           "/admin/",
           "/admin/*",
+          "/login",
           "/go",
           "/go/",
           "/go/*",

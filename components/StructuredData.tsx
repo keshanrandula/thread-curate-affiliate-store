@@ -34,7 +34,9 @@ export function ProductJsonLd({ product, siteUrl = "http://localhost:3000" }: { 
       "@type": "Offer",
       priceCurrency: product.currency || "USD",
       price: product.price,
-      priceValidUntil: "2026-12-31",
+      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+        .toISOString()
+        .split("T")[0],
       itemCondition: "https://schema.org/NewCondition",
       availability: "https://schema.org/InStock",
       url: productUrl,
@@ -123,7 +125,7 @@ export function WebsiteJsonLd({
     url: baseUrl,
     potentialAction: {
       "@type": "SearchAction",
-      target: `${baseUrl}/shop?q={search_term_string}`,
+      target: `${baseUrl}/search?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

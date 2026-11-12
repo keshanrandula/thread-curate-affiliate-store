@@ -33,16 +33,24 @@ export const metadata: Metadata = {
     "affiliate shop",
     "fashion deals",
     "designer clothes",
+    "curated fashion",
     "menswear",
     "womenswear",
-    "curated fashion",
     "merino wool",
     "denim",
     "handpicked apparel",
+    "clothing deals",
+    "verified fashion",
+    "thread and curate",
   ],
   authors: [{ name: "Thread & Curate", url: siteUrl }],
   creator: "Thread & Curate",
   publisher: "Thread & Curate",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
     canonical: "/",
   },
@@ -65,6 +73,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@threadandcurate",
     title: "THREAD & CURATE | Verified Fashion Deals",
     description:
       "Handpicked clothing, outerwear, and accessories from vetted top-tier affiliate brands.",
@@ -84,6 +93,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  category: "fashion",
 };
 
 export default async function RootLayout({

@@ -110,6 +110,11 @@ export function Footer({
                   Privacy Policy
                 </Link>
               </li>
+              <li className="pt-1 border-t border-amber-200/50 dark:border-zinc-800/60">
+                <Link href="/login" className="text-amber-700 dark:text-amber-400 hover:underline font-semibold flex items-center gap-1">
+                  <span>Merchant Login &rarr;</span>
+                </Link>
+              </li>
 
             </ul>
           </div>
