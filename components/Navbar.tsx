@@ -13,7 +13,6 @@ import {
   ChevronDown,
   ArrowRight,
   ShieldAlert,
-  User,
 } from "lucide-react";
 import { useWishlist } from "./WishlistProvider";
 import { ThemeToggle } from "./ThemeToggle";
@@ -219,17 +218,6 @@ export function Navbar({
               )}
             </button>
 
-            {/* Sign In / Account Link */}
-            <Link
-              href="/login"
-              className="p-2 sm:px-3 sm:py-2 text-stone-800 hover:text-amber-800 dark:text-zinc-200 dark:hover:text-amber-400 rounded-xl bg-stone-100 hover:bg-amber-100/70 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-stone-200 dark:border-zinc-800 transition-all flex items-center gap-1.5 text-xs font-bold shadow-xs"
-              title="Sign In"
-            >
-              <User className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-              <span className="hidden lg:inline">Sign In</span>
-            </Link>
-
-
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -306,15 +294,6 @@ export function Navbar({
             >
               <ShieldAlert className="w-4 h-4 text-amber-500 dark:text-amber-400" />
               FTC Affiliate Disclosure
-            </Link>
-
-            <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 text-xs font-semibold text-amber-700 dark:text-amber-400 hover:bg-amber-100/60 dark:hover:bg-zinc-900 rounded-lg flex items-center gap-2"
-            >
-              <User className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-              <span>Merchant &amp; Admin Sign In</span>
             </Link>
 
           </div>

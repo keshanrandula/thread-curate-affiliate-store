@@ -9,12 +9,7 @@ const JWT_SECRET = new TextEncoder().encode(
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only protect admin routes
-  if (!pathname.startsWith("/admin")) {
-    return NextResponse.next();
-  }
-
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/admin/login" || pathname === "/login";
 
   // Check admin session cookies (both standard admin_session and authjs cookie)
   const token =
@@ -35,16 +30,16 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Not authenticated and trying to access protected /admin route -> redirect to login
-  if (!isAuthenticated && !isLoginPage) {
-    const loginUrl = new URL("/admin/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  // Already authenticated and visiting login page -> redirect to dashboard
+  // Already authenticated and visiting login page -> redirect straight to admin dashboard
   if (isAuthenticated && isLoginPage) {
     return NextResponse.redirect(new URL("/admin", request.url));
+  }
+
+  // Not authenticated and trying to access protected /admin route -> redirect to login
+  if (!isAuthenticated && pathname.startsWith("/admin") && !isLoginPage) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
@@ -53,5 +48,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/admin/:path*",
+    "/login",
   ],
 };
