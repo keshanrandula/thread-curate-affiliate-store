@@ -12,6 +12,8 @@ import {
   Trash2,
   ExternalLink,
   Tag,
+  Hash,
+  Check,
   Bold,
   Italic,
   List,
@@ -94,13 +96,48 @@ export function ProductForm({
     }
   };
 
+  const popularHashtags = [
+    "trending",
+    "sale",
+    "winter",
+    "summer",
+    "luxury",
+    "denim",
+    "casual",
+    "streetwear",
+    "merinowool",
+    "sustainable",
+    "footwear",
+    "outerwear",
+    "accessories",
+    "minimalist",
+  ];
+
   const handleAddTag = () => {
     if (!tagInput.trim()) return;
-    const cleanTag = tagInput.trim().replace(/^#/, "");
-    if (!tags.includes(cleanTag)) {
-      setTags([...tags, cleanTag]);
+    // Supports multiple space, comma, or semicolon separated hashtags pasted or typed at once
+    const tokens = tagInput
+      .split(/[,;\s]+/)
+      .map((t) => t.trim().replace(/^#+/, "").toLowerCase())
+      .filter((t) => t.length > 0);
+
+    const newTags = [...tags];
+    for (const token of tokens) {
+      if (!newTags.includes(token)) {
+        newTags.push(token);
+      }
     }
+    setTags(newTags);
     setTagInput("");
+  };
+
+  const toggleHashtag = (hashtag: string) => {
+    const clean = hashtag.replace(/^#+/, "").toLowerCase().trim();
+    if (tags.includes(clean)) {
+      setTags(tags.filter((t) => t !== clean));
+    } else {
+      setTags([...tags, clean]);
+    }
   };
 
   const handleRemoveTag = (index: number) => {
@@ -503,49 +540,104 @@ export function ProductForm({
             <span>Search Tags &amp; Dynamic Attributes</span>
           </h2>
 
-          {/* Tags Chips */}
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-stone-700 dark:text-zinc-300">Tags / Keywords</label>
+          {/* Tags & Hashtags Chips */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-stone-700 dark:text-zinc-300 flex items-center gap-1.5">
+                <Hash className="w-3.5 h-3.5 text-amber-500" />
+                <span>Product Hashtags &amp; Search Keywords</span>
+              </label>
+              <span className="text-[11px] text-stone-500 dark:text-zinc-400">
+                {tags.length} {tags.length === 1 ? "hashtag" : "hashtags"} attached
+              </span>
+            </div>
+            
+            <p className="text-[11px] text-stone-500 dark:text-zinc-400">
+              Type <code className="font-mono text-amber-600 dark:text-amber-400">#hashtag</code> or multiple hashtags (e.g. <code className="font-mono text-amber-600 dark:text-amber-400">#winter #sale #denim</code>) and press <kbd className="px-1 py-0.5 rounded bg-stone-200 dark:bg-zinc-800 text-[10px]">Enter</kbd> or <kbd className="px-1 py-0.5 rounded bg-stone-200 dark:bg-zinc-800 text-[10px]">Space</kbd>, or click the trending suggestions below.
+            </p>
+
             <div className="flex gap-2">
-              <input
-                type="text"
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === ",") {
-                    e.preventDefault();
-                    handleAddTag();
-                  }
-                }}
-                placeholder="Type tag and press Enter (e.g. Wool, Winter, Luxury, Sale)..."
-                className="flex-1 px-3.5 py-2 text-xs bg-stone-50 dark:bg-zinc-950 border border-stone-300 dark:border-zinc-800 rounded-xl text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-              />
+              <div className="relative flex-1">
+                <Hash className="w-3.5 h-3.5 absolute left-3 top-2.5 text-stone-400 dark:text-zinc-500" />
+                <input
+                  type="text"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === "," || e.key === " ") {
+                      e.preventDefault();
+                      handleAddTag();
+                    }
+                  }}
+                  placeholder="Type #tag and press Enter or space (e.g. #winter #sale #luxury)..."
+                  className="w-full pl-8 pr-3.5 py-2 text-xs bg-stone-50 dark:bg-zinc-950 border border-stone-300 dark:border-zinc-800 rounded-xl text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
+                />
+              </div>
               <button
                 type="button"
                 onClick={handleAddTag}
-                className="btn-amber-gradient px-4 py-2 text-white font-bold text-xs rounded-xl shadow-sm"
+                className="btn-amber-gradient px-4 py-2 text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer shrink-0"
               >
-                Add Tag
+                + Add Hashtag
               </button>
             </div>
 
-            {tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {tags.map((t, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 font-medium"
-                  >
-                    <span>{t}</span>
+            {/* Trending / Suggested Hashtags */}
+            <div className="space-y-1.5 pt-1">
+              <span className="text-[10px] uppercase font-bold text-stone-400 dark:text-zinc-500 tracking-wider">
+                Trending Suggestions (Click to Add):
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {popularHashtags.map((suggestion) => {
+                  const isSelected = tags.includes(suggestion);
+                  return (
                     <button
+                      key={suggestion}
                       type="button"
-                      onClick={() => handleRemoveTag(idx)}
-                      className="text-stone-400 hover:text-red-500 cursor-pointer"
+                      onClick={() => toggleHashtag(suggestion)}
+                      className={`text-[11px] px-2.5 py-1 rounded-lg border transition-all flex items-center gap-1 cursor-pointer font-medium ${
+                        isSelected
+                          ? "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40 shadow-xs"
+                          : "bg-stone-100 hover:bg-stone-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-stone-600 dark:text-zinc-400 border-stone-200 dark:border-zinc-800"
+                      }`}
                     >
-                      &times;
+                      {isSelected ? (
+                        <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                      ) : (
+                        <span className="text-stone-400 dark:text-zinc-500">+</span>
+                      )}
+                      <span>#{suggestion}</span>
                     </button>
-                  </span>
-                ))}
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Selected Hashtags Badges */}
+            {tags.length > 0 && (
+              <div className="pt-2 border-t border-stone-200 dark:border-zinc-800/60">
+                <span className="text-[10px] uppercase font-bold text-stone-400 dark:text-zinc-500 tracking-wider block mb-1.5">
+                  Attached Hashtags:
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {tags.map((t, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs bg-gradient-to-r from-amber-500/15 to-orange-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30 font-semibold shadow-xs"
+                    >
+                      <Hash className="w-3 h-3 text-amber-500" />
+                      <span>{t}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(idx)}
+                        className="ml-0.5 text-stone-400 hover:text-rose-500 dark:hover:text-rose-400 cursor-pointer font-bold text-sm leading-none"
+                        title={`Remove #${t}`}
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </div>

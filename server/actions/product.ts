@@ -37,11 +37,15 @@ export async function createProductAction(formData: FormData) {
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
 
-  // Parse tags array
-  const tags = rawTags
-    .split(",")
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
+  // Parse tags array (supports #tag, comma, space or semicolon separated)
+  const tags = Array.from(
+    new Set(
+      rawTags
+        .split(/[,;\s]+/)
+        .map((s) => s.trim().replace(/^#+/, "").toLowerCase())
+        .filter((s) => s.length > 0)
+    )
+  );
 
   // Parse attributes JSON
   let attributes = {};
@@ -133,10 +137,15 @@ export async function updateProductAction(id: string, formData: FormData) {
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
 
-  const tags = rawTags
-    .split(",")
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
+  // Parse tags array (supports #tag, comma, space or semicolon separated)
+  const tags = Array.from(
+    new Set(
+      rawTags
+        .split(/[,;\s]+/)
+        .map((s) => s.trim().replace(/^#+/, "").toLowerCase())
+        .filter((s) => s.length > 0)
+    )
+  );
 
   let attributes = {};
   try {

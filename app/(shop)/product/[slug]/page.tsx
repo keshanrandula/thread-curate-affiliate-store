@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   RotateCcw,
   Tag,
+  Hash,
   CheckCircle2,
   Info,
 } from "lucide-react";
@@ -248,18 +249,26 @@ export default async function ProductDetailPage({
             </div>
           )}
 
-          {/* Tags */}
+          {/* Interactive Hashtags */}
           {product.tags && product.tags.length > 0 && (
-            <div className="pt-4 flex flex-wrap items-center gap-2 border-t border-stone-200 dark:border-zinc-800/80">
-              <Tag className="w-3.5 h-3.5 text-stone-400 dark:text-zinc-400" />
-              {product.tags.map((tag: string) => (
-                <span
-                  key={tag}
-                  className="px-2.5 py-1 rounded-lg bg-stone-100 dark:bg-zinc-900 text-stone-600 dark:text-zinc-400 text-xs border border-stone-200 dark:border-zinc-800"
-                >
-                  #{tag}
-                </span>
-              ))}
+            <div className="pt-4 space-y-2 border-t border-stone-200 dark:border-zinc-800/80">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 dark:text-zinc-400 flex items-center gap-1.5">
+                <Hash className="w-3.5 h-3.5 text-amber-500" />
+                <span>Related Hashtags</span>
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                {product.tags.map((tag: string) => (
+                  <Link
+                    key={tag}
+                    href={`/shop?q=${encodeURIComponent(tag)}`}
+                    className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-stone-100 hover:bg-amber-100/70 dark:bg-zinc-900 dark:hover:bg-amber-950/40 text-stone-700 hover:text-amber-800 dark:text-zinc-300 dark:hover:text-amber-300 text-xs font-semibold border border-stone-200 dark:border-zinc-800 hover:border-amber-400 dark:hover:border-amber-500/50 shadow-xs transition-all active:scale-95 group"
+                    title={`Browse all deals tagged #${tag}`}
+                  >
+                    <span className="text-amber-500 group-hover:scale-110 transition-transform">#</span>
+                    <span>{tag}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
         </div>
