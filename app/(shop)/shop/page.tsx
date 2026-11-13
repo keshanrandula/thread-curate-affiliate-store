@@ -5,6 +5,9 @@ import { getProducts, getFilterOptions } from "@/lib/api";
 import { ProductGrid } from "@/components/ProductGrid";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { BreadcrumbListJsonLd, ItemListJsonLd } from "@/components/StructuredData";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata({
   searchParams,
@@ -92,6 +95,28 @@ export default async function ShopPage({
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Google SEO JSON-LD Breadcrumbs */}
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "All Fashion Deals", url: "/shop" },
+        ]}
+        siteUrl={siteUrl}
+      />
+
+      {/* Google SEO ItemList Schema */}
+      <ItemListJsonLd
+        name="All Fashion Deals Catalog"
+        description="Verified designer apparel, premium denim, knitwear, and accessories from global fashion houses."
+        items={result.products.map((p) => ({
+          name: p.title,
+          url: `/product/${p.slug}`,
+          image: p.images?.[0],
+          price: p.price,
+        }))}
+        siteUrl={siteUrl}
+      />
+
       {/* Breadcrumbs */}
       <Breadcrumbs items={[{ label: "All Deals Catalog" }]} />
 

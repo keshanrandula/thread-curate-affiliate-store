@@ -44,15 +44,33 @@ export async function generateMetadata({
   return {
     title: cleanTitle,
     description: cleanDesc,
+    keywords: [
+      product.title,
+      product.brand,
+      product.category?.name,
+      "fashion deal",
+      "curated clothing",
+      "verified affiliate link",
+    ].filter(Boolean) as string[],
     alternates: {
       canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
     openGraph: {
       title: `${product.title} | ${product.brand}`,
       description: cleanDesc,
       url: canonicalUrl,
       images,
-      type: "article",
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",

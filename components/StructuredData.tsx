@@ -44,6 +44,41 @@ export function ProductJsonLd({ product, siteUrl = "http://localhost:3000" }: { 
         "@type": "Organization",
         name: product.affiliateNetwork || "Affiliate Partner",
       },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "US",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 30,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/FreeReturn",
+      },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: "0.00",
+          currency: product.currency || "USD",
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "US",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 2,
+            unitCode: "DAY",
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 2,
+            maxValue: 5,
+            unitCode: "DAY",
+          },
+        },
+      },
     },
   };
 
@@ -128,6 +163,43 @@ export function WebsiteJsonLd({
       target: `${baseUrl}/search?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function ItemListJsonLd({
+  name,
+  description,
+  items,
+  siteUrl = "http://localhost:3000",
+}: {
+  name: string;
+  description?: string;
+  items: Array<{ name: string; url: string; image?: string; price?: number }>;
+  siteUrl?: string;
+}) {
+  if (!items || items.length === 0) return null;
+
+  const baseUrl = siteUrl.replace(/\/$/, "");
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    description: description || undefined,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: item.url.startsWith("http") ? item.url : `${baseUrl}${item.url.startsWith("/") ? "" : "/"}${item.url}`,
+      image: item.image || undefined,
+    })),
   };
 
   return (

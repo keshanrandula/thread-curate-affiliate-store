@@ -7,7 +7,7 @@ import { getCategoryBySlug, getProducts, getFilterOptions } from "@/lib/api";
 import { ProductGrid } from "@/components/ProductGrid";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { BreadcrumbListJsonLd } from "@/components/StructuredData";
+import { BreadcrumbListJsonLd, ItemListJsonLd } from "@/components/StructuredData";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -99,6 +99,19 @@ export default async function CategoryPage({
           { name: "Collections", url: "/shop" },
           { name: category.name, url: `/category/${category.slug}` },
         ]}
+        siteUrl={siteUrl}
+      />
+
+      {/* Category ItemList Schema for Google Product Collections */}
+      <ItemListJsonLd
+        name={`${category.name} Wardrobe Deals`}
+        description={category.description || `Browse verified deals and essentials in ${category.name}.`}
+        items={result.products.map((p) => ({
+          name: p.title,
+          url: `/product/${p.slug}`,
+          image: p.images?.[0],
+          price: p.price,
+        }))}
         siteUrl={siteUrl}
       />
 

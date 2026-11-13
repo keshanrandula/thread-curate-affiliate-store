@@ -16,6 +16,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductCarousel } from "@/components/ProductCarousels";
 import { ValueProps } from "@/components/ValueProps";
 import { NewsletterSection } from "@/components/NewsletterSection";
+import { ItemListJsonLd } from "@/components/StructuredData";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -64,6 +65,19 @@ export default async function HomePage() {
 
   return (
     <div className="relative overflow-hidden">
+      {/* Google SEO ItemList Schema for Featured Products */}
+      <ItemListJsonLd
+        name="Featured Wardrobe Highlights"
+        description="Top-rated apparel and footwear vetted for craftsmanship, style, and deal value."
+        items={featuredProducts.map((p) => ({
+          name: p.title,
+          url: `/product/${p.slug}`,
+          image: p.images?.[0],
+          price: p.price,
+        }))}
+        siteUrl={siteUrl}
+      />
+
       {/* Radiant Glow Background Accent */}
       <div className="radiant-glow" />
 

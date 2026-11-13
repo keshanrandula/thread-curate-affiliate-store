@@ -53,20 +53,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic Category Pages
+  // Dynamic Category Pages with Google Image sitemap
   const categoryRoutes: MetadataRoute.Sitemap = categories.map((c) => ({
     url: `${baseUrl}/category/${c.slug}`,
     lastModified: c.updatedAt ? new Date(c.updatedAt) : now,
     changeFrequency: "daily",
     priority: 0.8,
+    images: c.image ? [c.image] : undefined,
   }));
 
-  // Dynamic Product Pages
+  // Dynamic Product Pages with Google Image sitemap
   const productRoutes: MetadataRoute.Sitemap = productResult.products.map((p) => ({
     url: `${baseUrl}/product/${p.slug}`,
     lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
     changeFrequency: "weekly",
     priority: 0.7,
+    images: Array.isArray(p.images) && p.images.length > 0 ? p.images.slice(0, 5) : undefined,
   }));
 
   return [...staticRoutes, ...categoryRoutes, ...productRoutes];

@@ -20,7 +20,35 @@ export default function robots(): MetadataRoute.Robots {
           "/api/",
         ],
       },
+      {
+        userAgent: "Googlebot",
+        allow: [
+          "/",
+          "/shop",
+          "/category/*",
+          "/product/*",
+          "/about",
+          "/contact",
+          "/disclosure",
+          "/privacy",
+        ],
+        disallow: [
+          "/admin*",
+          "/login",
+          "/go*",
+          "/api*",
+        ],
+      },
+      {
+        userAgent: "Googlebot-Image",
+        allow: "/",
+        disallow: [
+          "/admin*",
+          "/login",
+        ],
+      },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }
