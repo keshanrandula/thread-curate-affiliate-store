@@ -112,12 +112,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${outfit.variable} ${plusJakarta.variable}`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=localStorage.getItem('app-theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||'dark';var r=t==='system'?(p?'dark':'light'):t;if(r==='dark'){document.documentElement.classList.add('dark');document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.colorScheme='dark';}else{document.documentElement.classList.remove('dark');document.documentElement.setAttribute('data-theme','light');document.documentElement.style.colorScheme='light';}}catch(e){}})();`,
-          }}
-        />
+      <body className="min-h-screen bg-stone-50 text-stone-900 dark:bg-[#0c0a09] dark:text-[#fafaf9] font-sans antialiased selection:bg-amber-500/30 selection:text-amber-800 dark:selection:text-amber-200">
         <OrganizationJsonLd
           siteName={settings.siteName}
           url={siteUrl}
@@ -125,8 +120,6 @@ export default async function RootLayout({
           socialLinks={settings.socialLinks}
         />
         <WebsiteJsonLd siteName={settings.siteName} url={siteUrl} />
-      </head>
-      <body className="min-h-screen bg-stone-50 text-stone-900 dark:bg-[#0c0a09] dark:text-[#fafaf9] font-sans antialiased selection:bg-amber-500/30 selection:text-amber-800 dark:selection:text-amber-200">
         <ThemeProvider defaultTheme="dark">
           {children}
         </ThemeProvider>
