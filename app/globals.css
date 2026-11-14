@@ -182,3 +182,43 @@ h1, h2, h3, h4, .font-display {
   box-shadow: 0 6px 24px rgba(245, 158, 11, 0.48);
   transform: translateY(-1px);
 }
+
+/* Hero Ambient Shadow Marquee Animation */
+@keyframes heroMarqueeForward {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes heroMarqueeReverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-hero-marquee-forward {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: heroMarqueeForward 52s linear infinite;
+}
+
+.animate-hero-marquee-reverse {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: heroMarqueeReverse 60s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-marquee-forward,
+  .animate-hero-marquee-reverse {
+    animation: none;
+  }
+}

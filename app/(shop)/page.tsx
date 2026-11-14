@@ -17,6 +17,7 @@ import { ProductCarousel } from "@/components/ProductCarousels";
 import { ValueProps } from "@/components/ValueProps";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { ItemListJsonLd } from "@/components/StructuredData";
+import { HeroBackgroundMarquee } from "@/components/HeroBackgroundMarquee";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -63,6 +64,11 @@ export default async function HomePage() {
       getSiteSettings(),
     ]);
 
+  const heroImages = [
+    ...featuredProducts.flatMap((p) => p.images || []),
+    ...trendingProducts.flatMap((p) => p.images || []),
+  ];
+
   return (
     <div className="relative overflow-hidden">
       {/* Google SEO ItemList Schema for Featured Products */}
@@ -78,12 +84,15 @@ export default async function HomePage() {
         siteUrl={siteUrl}
       />
 
-      {/* Radiant Glow Background Accent */}
-      <div className="radiant-glow" />
-
       {/* --- HERO BANNER (Editable via SiteSettings) --- */}
-      <section className="relative pt-12 sm:pt-20 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto space-y-6">
+      <section className="relative overflow-hidden pt-12 sm:pt-20 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-8">
+        {/* Subtle Ambient Scrolling Shadow Images Marquee */}
+        <HeroBackgroundMarquee productImages={heroImages} />
+
+        {/* Radiant Glow Background Accent */}
+        <div className="radiant-glow" />
+
+        <div className="relative z-10 text-center max-w-3xl mx-auto space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/30 text-amber-950 dark:text-amber-300 text-xs font-bold shadow-inner">
             <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             <span>Curated Apparel &amp; Verified Merchant Partnerships</span>
