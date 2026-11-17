@@ -4,7 +4,6 @@ import { useActionState, Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
-  Sparkles,
   Lock,
   Mail,
   ArrowRight,
@@ -17,6 +16,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { loginAction } from "@/server/actions/auth";
+import { BrandLogoIcon } from "@/components/BrandLogo";
 
 function AdminLoginForm() {
   const [state, formAction, isPending] = useActionState(loginAction, null);
@@ -44,9 +44,7 @@ function AdminLoginForm() {
       <div className="relative bg-zinc-900/90 border border-zinc-800 rounded-3xl p-8 sm:p-10 shadow-2xl backdrop-blur-2xl">
         {/* Brand Header */}
         <div className="text-center space-y-3 mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white mx-auto shadow-lg shadow-orange-500/25 ring-4 ring-amber-500/10">
-            <Sparkles className="w-7 h-7 text-white" />
-          </div>
+          <BrandLogoIcon size={56} className="mx-auto" />
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest">
               Backoffice Management Portal

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useWishlist } from "./WishlistProvider";
 import { ThemeToggle } from "./ThemeToggle";
+import { BrandLogo } from "./BrandLogo";
 
 export interface NavCategory {
   _id: string;
@@ -68,18 +69,8 @@ export function Navbar({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white shadow-lg shadow-orange-500/25 group-hover:scale-105 transition-transform duration-300">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-base sm:text-lg tracking-tight text-stone-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                {siteName}
-              </span>
-              <span className="text-[9px] text-amber-600 dark:text-amber-300/80 font-bold tracking-widest uppercase">
-                Curated Fashion
-              </span>
-            </div>
+          <Link href="/" className="flex items-center shrink-0">
+            <BrandLogo siteName={siteName} subtitle="Curated Fashion" size="md" />
           </Link>
 
           {/* Desktop Navigation Links & Category Mega Menu */}

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Sparkles, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { BrandLogo } from "./BrandLogo";
 
 export function Footer({
   siteName = "THREAD & CURATE",
@@ -35,11 +36,8 @@ export function Footer({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Col 1: Brand Info */}
           <div className="space-y-4 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-bold text-stone-900 dark:text-white text-base tracking-tight">{siteName}</span>
+            <Link href="/" className="inline-block">
+              <BrandLogo siteName={siteName} subtitle="Curated Fashion Platform" size="sm" variant="footer" />
             </Link>
             <p className="text-xs text-stone-600 dark:text-zinc-400 leading-relaxed">
               Handpicking verified fashion deals, timeless apparel, and wardrobe staples from the

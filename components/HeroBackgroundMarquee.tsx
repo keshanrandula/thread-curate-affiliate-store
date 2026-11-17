@@ -100,3 +100,4 @@ export function HeroBackgroundMarquee({ productImages = [] }: HeroBackgroundMarq
     </div>
   );
 }
+

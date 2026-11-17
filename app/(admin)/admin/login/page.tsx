@@ -3,8 +3,9 @@
 import { useActionState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Sparkles, Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
 import { loginAction } from "@/server/actions/auth";
+import { BrandLogoIcon } from "@/components/BrandLogo";
 
 function LoginForm() {
   const [state, formAction, isPending] = useActionState(loginAction, null);
@@ -14,9 +15,7 @@ function LoginForm() {
   return (
     <div className="relative w-full max-w-md bg-zinc-900/80 border border-zinc-800 rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
       <div className="text-center space-y-2 mb-8">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white mx-auto shadow-lg shadow-orange-500/25">
-          <Sparkles className="w-6 h-6 text-white" />
-        </div>
+        <BrandLogoIcon size={52} className="mx-auto" />
         <h1 className="text-2xl font-extrabold text-white">Merchant Admin Login</h1>
         <p className="text-xs text-zinc-400">
           Sign in with credentials to manage affiliate products, categories, and analytics

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { logoutAction } from "@/server/actions/auth";
 import { ThemeToggle } from "./ThemeToggle";
+import { BrandLogo } from "./BrandLogo";
 
 export function AdminSidebar({ userEmail, userRole }: { userEmail?: string; userRole?: string }) {
   const pathname = usePathname();
@@ -38,15 +39,14 @@ export function AdminSidebar({ userEmail, userRole }: { userEmail?: string; user
         <Link
           href="/admin"
           onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-3 group"
+          className="flex items-center group"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white shadow-lg shadow-orange-500/25 group-hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <h1 className="font-extrabold text-sm text-stone-900 dark:text-white tracking-tight">Affiliate Admin</h1>
-            <p className="text-[10px] text-amber-600 dark:text-amber-300/80 font-semibold">Merchant Console</p>
-          </div>
+          <BrandLogo
+            siteName="Affiliate Admin"
+            subtitle="Merchant Console"
+            size="sm"
+            variant="admin"
+          />
         </Link>
         <button
           onClick={() => setMobileOpen(false)}
