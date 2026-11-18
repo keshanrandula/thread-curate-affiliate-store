@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   Search,
-  Sparkles,
   Menu,
   X,
   Heart,

@@ -1,0 +1,68 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Cancel redundant previous runs if a new commit is pushed to the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-typecheck:
+    name: Code Quality & Type Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: TypeScript Typecheck
+        run: npx tsc --noEmit
+
+      - name: ESLint Code Inspection
+        run: npm run lint
+
+  production-build:
+    name: Next.js Production Build
+    needs: lint-and-typecheck
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: 1
+      # Dummy/Fallback environment values for static build phase
+      NEXT_PUBLIC_SITE_URL: https://threadandcurate.com
+      MONGODB_URI: mongodb://127.0.0.1:27017/affiliate_shop
+      AUTH_SECRET: ci-mock-secure-secret-32-characters-minimum
+      ADMIN_EMAIL: admin@affiliate.com
+      ADMIN_PASSWORD: admin-fallback-password
+      STORAGE_PROVIDER: local
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Next.js Application
+        run: npm run build

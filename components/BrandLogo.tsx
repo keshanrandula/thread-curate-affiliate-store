@@ -20,11 +20,11 @@ export interface BrandLogoProps {
 export function BrandLogoIcon({
   size = 40,
   className = "",
-  glow = true,
+  _glow = true,
 }: {
   size?: number;
   className?: string;
-  glow?: boolean;
+  _glow?: boolean;
 }) {
   return (
     <div
