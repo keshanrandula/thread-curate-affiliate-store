@@ -1,0 +1,49 @@
+services:
+  # Next.js Fullstack App (Frontend + Backend)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: thread_curate_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/affiliate_shop
+      - AUTH_SECRET=your-secure-random-32-char-secret-key-here
+      - ADMIN_EMAIL=admin@affiliate.com
+      - ADMIN_PASSWORD=change-me-admin123
+      - STORAGE_PROVIDER=local
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3000
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: thread_curate_db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - app-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
